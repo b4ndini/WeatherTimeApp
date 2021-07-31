@@ -4,7 +4,7 @@ import com.lfelipe.weathertimeapp.api.ApiService
 import com.lfelipe.weathertimeapp.api.ResponseApi
 import java.lang.Exception
 
-class MainRepository {
+class MainRepository{
 
 
     suspend fun getCurrentLocalWeather(location: String): ResponseApi {
@@ -23,6 +23,8 @@ class MainRepository {
 
     }
 
+
+
     suspend fun getToken() : ResponseApi{
 
         return try{
@@ -39,4 +41,22 @@ class MainRepository {
         }
 
     }
+
+    suspend fun getWeekForecast(location: String) : ResponseApi{
+
+        return try{
+            val response = ApiService.weatherApi.currentForecast(location)
+
+            if(response.isSuccessful){
+                ResponseApi.Success(response.body())
+            }
+            else{
+                ResponseApi.Error(response.code().toString())
+            }
+        }catch (exception: Exception){
+            ResponseApi.Error("ERRO CARREGAR")
+        }
+
+    }
+
 }

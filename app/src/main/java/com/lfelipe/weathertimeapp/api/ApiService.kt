@@ -1,15 +1,17 @@
 package com.lfelipe.weathertimeapp.api
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.lfelipe.util.Constants.AUTH_LABEL
-import com.lfelipe.util.Constants.AUTH_VALUE
 import com.lfelipe.util.Constants.BASE_WEATHER_URL
+import com.lfelipe.util.TokenAuth.TOKEN
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.coroutines.coroutineContext
 
 object ApiService {
-
     val weatherApi = getWeatherApiClient().create(WeatherApi::class.java)
 
     private fun getWeatherApiClient(): Retrofit {
@@ -27,7 +29,7 @@ object ApiService {
             .addInterceptor(loggingInterceptor)
             .addInterceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader(AUTH_LABEL, AUTH_VALUE)
+                    .addHeader(AUTH_LABEL, TOKEN)
                     .build()
                 chain.proceed(newRequest)
             }
