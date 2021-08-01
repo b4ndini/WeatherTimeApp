@@ -59,4 +59,21 @@ class MainRepository{
 
     }
 
+    suspend fun getLocation(lat: String, lon: String) : ResponseApi{
+
+        return try{
+            val response = ApiService.locationApi.getLocation(lat, lon)
+
+            if(response.isSuccessful){
+                ResponseApi.Success(response.body())
+            }
+            else{
+                ResponseApi.Error(response.code().toString())
+            }
+        }catch (exception: Exception){
+            ResponseApi.Error("ERRO CARREGAR")
+        }
+
+    }
+
 }

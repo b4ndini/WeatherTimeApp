@@ -1,4 +1,4 @@
-package com.lfelipe.util
+package com.lfelipe.weathertimeapp.util
 
 object TokenAuth {
 

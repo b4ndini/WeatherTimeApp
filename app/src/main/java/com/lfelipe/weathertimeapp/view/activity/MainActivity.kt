@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.lfelipe.util.Constants.FORECA_IMAGE_URL
+import com.lfelipe.weathertimeapp.util.Constants.FORECA_IMAGE_URL
 import com.lfelipe.weathertimeapp.R
 import com.lfelipe.weathertimeapp.databinding.ActivityMainBinding
 import com.lfelipe.weathertimeapp.view.adapter.MainAdapter
@@ -76,6 +76,15 @@ class MainActivity : AppCompatActivity() {
 
             viewModel.getCurrentLocalWeather("-51.17380,-30.0158")
             viewModel.getWeekForecast("-51.17380,-30.0158")
+            viewModel.getLocation("-30.0158", "-51.17380")
+        })
+
+        viewModel.locationLiveData.observe(this,{
+            it.let{ location ->
+                binding.tvCity.text = location.address.city
+                binding.tvSuburb.text = location.address.suburb
+
+            }
         })
     }
 

@@ -1,8 +1,7 @@
 package com.lfelipe.weathertimeapp.api
 
-import com.lfelipe.util.Constants.FORECA_PASSWORD
-import com.lfelipe.util.Constants.FORECA_USER
-import com.lfelipe.weathertimeapp.model.Current
+import com.lfelipe.weathertimeapp.util.Constants.FORECA_PASSWORD
+import com.lfelipe.weathertimeapp.util.Constants.FORECA_USER
 import com.lfelipe.weathertimeapp.model.CurrentWeather
 import com.lfelipe.weathertimeapp.model.Token
 import com.lfelipe.weathertimeapp.model.WeekForecast

@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.lfelipe.util.Constants
+import com.lfelipe.weathertimeapp.util.Constants
 import com.lfelipe.weathertimeapp.R
 import com.lfelipe.weathertimeapp.model.Forecast
+import com.lfelipe.weathertimeapp.util.formatToPtBrDate
 
 
 class MainAdapter (
@@ -40,6 +41,7 @@ class MainAdapter (
             Glide.with(this).load(image).into(findViewById(R.id.ivWeatherIcon))
             findViewById<TextView>(R.id.tvMinMaxTemp).text = forecast.minTemp.toString()+"ºC/" +forecast.maxTemp.toString()+"ºC"
             findViewById<TextView>(R.id.tvPrepRate).text = forecast.precipAccum.toString()+" mm"
+            findViewById<TextView>(R.id.tvDayOfWeek).text = forecast.date.formatToPtBrDate()
         }
 
     }
