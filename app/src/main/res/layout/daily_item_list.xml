@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp"
+    android:background="#242634">
+
+
+    <TextView
+        style="@style/DailyText"
+        android:id="@+id/tvDayOfWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvPrecipAccum"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvMaxTemp"
+        tools:text="Hoje" />
+
+    <TextView
+        style="@style/DailyText"
+        android:textColor="#80FFFFFF"
+        android:id="@+id/tvMinTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvMaxTemp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="10º" />
+
+    <TextView
+        style="@style/DailyText"
+        android:id="@+id/tvMaxTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvMinTemp"
+        tools:text="18º" />
+
+    <TextView
+        android:textSize="12sp"
+        style="@style/DailyText"
+        android:id="@+id/tvPrecipAccum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvMinTemp"
+        app:layout_constraintEnd_toEndOf="@id/tvMaxTemp"
+        app:layout_constraintTop_toBottomOf="@id/tvMinTemp"
+        tools:text="0.01 mm" />
+
+    <ImageView
+        android:id="@+id/ivWeatherIcon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvPrecipAccum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvMaxTemp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

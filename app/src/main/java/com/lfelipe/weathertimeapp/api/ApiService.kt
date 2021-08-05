@@ -35,7 +35,10 @@ object ApiService {
             .addInterceptor(loggingInterceptor)
             .addInterceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader(AUTH_LABEL, TOKEN)
+                    .addHeader(
+                        AUTH_LABEL,
+                        TOKEN
+                    )
                     .build()
                 chain.proceed(newRequest)
             }

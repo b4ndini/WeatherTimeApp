@@ -59,6 +59,23 @@ class MainRepository{
 
     }
 
+    suspend fun getDailyForecast(location: String) : ResponseApi{
+
+        return try{
+            val response = ApiService.weatherApi.dailyForecast(location)
+
+            if(response.isSuccessful){
+                ResponseApi.Success(response.body())
+            }
+            else{
+                ResponseApi.Error(response.code().toString())
+            }
+        }catch (exception: Exception){
+            ResponseApi.Error("ERRO CARREGAR")
+        }
+
+    }
+
     suspend fun getLocation(lat: String, lon: String) : ResponseApi{
 
         return try{

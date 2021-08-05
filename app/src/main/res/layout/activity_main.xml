@@ -9,144 +9,28 @@
     tools:context=".view.activity.MainActivity">
 
 
-    <TextView
-        android:id="@+id/tvSuburb"
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/btNavMenu"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bt_nav_menu"
+        app:labelVisibilityMode="unlabeled"/>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        app:navGraph="@navigation/navigation_menu"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/btNavMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        tools:text="Centro Histórico" />
-
-    <TextView
-        android:id="@+id/tvCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@id/tvSuburb"
-        app:layout_constraintStart_toStartOf="@id/tvSuburb"
-        app:layout_constraintTop_toBottomOf="@id/tvSuburb"
-        tools:text="Porto Alegre" />
-
-    <ImageView
-        android:id="@+id/ivTempIcon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvCity"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/ivTempIcon"
-        app:layout_constraintStart_toStartOf="@+id/ivTempIcon"
-        app:layout_constraintTop_toBottomOf="@+id/ivTempIcon"
-        tools:text="Céu claro" />
-
-    <TextView
-        android:id="@+id/tvTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:textColor="@color/white"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/ivTempIcon"
-        app:layout_constraintStart_toStartOf="@+id/ivTempIcon"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescription"
-        tools:text="32º" />
-
-    <TextView
-        android:id="@+id/tvRealFeel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/ivTempIcon"
-        app:layout_constraintStart_toStartOf="@+id/ivTempIcon"
-        app:layout_constraintTop_toBottomOf="@+id/tvTemp"
-        tools:text="Sensação: 32º" />
-
-    <TextView
-        android:id="@+id/tvWindSpeed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="2dp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/tvPrecipRate"
-        app:layout_constraintStart_toStartOf="@+id/ivTempIcon"
-        app:layout_constraintTop_toBottomOf="@+id/tvRealFeel"
-        tools:text="10 km/h" />
-
-    <TextView
-        android:id="@+id/tvPrecipRate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/ivTempIcon"
-        app:layout_constraintStart_toEndOf="@id/tvWindSpeed"
-        app:layout_constraintTop_toTopOf="@+id/tvWindSpeed"
-        tools:text="4%" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvForecast"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="40dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWindSpeed"
-        tools:itemCount="4"
-        tools:listitem="@layout/forecast_item_list" />
-
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/errorContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:constraint_referenced_ids="tvErrorMsg, ivErrorIcon" />
-
-    <TextView
-        android:id="@+id/tvErrorMsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Falha na conexão. \nClique para recarregar."
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivErrorIcon" />
-
-    <ImageView
-        android:id="@+id/ivErrorIcon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/ic_reload"
-        app:layout_constraintBottom_toBottomOf="@id/ivTempIcon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ivTempIcon" />
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

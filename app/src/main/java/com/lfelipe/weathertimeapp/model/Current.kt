@@ -5,7 +5,7 @@ data class Current(
     val dewPoint: Int,
     val feelsLikeTemp: Int,
     val precipProb: Int,
-    val precipRate: Int,
+    val precipRate: Double,
     val pressure: Double,
     val relHumidity: Int,
     val symbol: String,

@@ -6,10 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.lfelipe.weathertimeapp.util.TokenAuth.TOKEN
 import com.lfelipe.weathertimeapp.api.ResponseApi
 import com.lfelipe.weathertimeapp.api.repository.MainRepository
-import com.lfelipe.weathertimeapp.model.CurrentWeather
-import com.lfelipe.weathertimeapp.model.Location
-import com.lfelipe.weathertimeapp.model.Token
-import com.lfelipe.weathertimeapp.model.WeekForecast
+import com.lfelipe.weathertimeapp.model.*
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -18,8 +15,10 @@ class MainViewModel : ViewModel() {
     var currentLocalWeatherLiveData: MutableLiveData<CurrentWeather> = MutableLiveData()
     var locationLiveData: MutableLiveData<Location> = MutableLiveData()
     var currentWeekForecastLiveData: MutableLiveData<WeekForecast> = MutableLiveData()
+    var dailyForecastLiveData: MutableLiveData<DailyForecast> = MutableLiveData()
+    var errorDailyLiveData: MutableLiveData<String> = MutableLiveData()
     val errorMsgLiveData: MutableLiveData<String> = MutableLiveData()
-    val locationErrorMsgLiveData: MutableLiveData<String> = MutableLiveData()
+    private val locationErrorMsgLiveData: MutableLiveData<String> = MutableLiveData()
     private val repository: MainRepository = MainRepository()
 
     fun getCurrentLocalWeather(location: String) {
@@ -39,8 +38,10 @@ class MainViewModel : ViewModel() {
     viewModelScope.launch {
         when (val response = repository.getToken()) {
             is ResponseApi.Success -> {
-                token.value = response.data as Token
-                TOKEN = "Bearer " + token.value?.accessToken
+                val setToken =  response.data as Token
+                TOKEN = "Bearer " + setToken.accessToken
+                token.value = response.data
+
             }
             is ResponseApi.Error -> {
                 errorMsgLiveData.value = response.msg
@@ -57,6 +58,19 @@ class MainViewModel : ViewModel() {
                 }
                 is ResponseApi.Error -> {
                     errorMsgLiveData.value = response.msg
+                }
+            }
+        }
+    }
+
+    fun getDailyForecast(location: String) {
+        viewModelScope.launch {
+            when (val response = repository.getDailyForecast(location)) {
+                is ResponseApi.Success -> {
+                    dailyForecastLiveData.postValue(response.data as DailyForecast?)
+                }
+                is ResponseApi.Error -> {
+                    errorDailyLiveData.value = response.msg
                 }
             }
         }

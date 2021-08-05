@@ -6,20 +6,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.lfelipe.weathertimeapp.util.Constants
 import com.lfelipe.weathertimeapp.R
-import com.lfelipe.weathertimeapp.model.Forecast
+import com.lfelipe.weathertimeapp.model.ForecastX
+import com.lfelipe.weathertimeapp.util.Constants
 import com.lfelipe.weathertimeapp.util.formatToPtBrDate
 
-
-class MainAdapter (
-    private val list: List<Forecast>
-) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class DailyAdapter (
+    private val list: List<ForecastX>
+) : RecyclerView.Adapter<DailyAdapter.ViewHolder>() {
 
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.forecast_item_list, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.daily_item_list, parent, false)
         return ViewHolder(view)
     }
 
@@ -34,13 +33,13 @@ class MainAdapter (
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
-        fun bind(forecast: Forecast) = with(itemView) {
-
+        fun bind(forecast: ForecastX) = with(itemView) {
 
             val image = Constants.FORECA_IMAGE_URL + forecast.symbol + ".png"
             Glide.with(this).load(image).into(findViewById(R.id.ivWeatherIcon))
-            findViewById<TextView>(R.id.tvMinMaxTemp).text = forecast.minTemp.toString()+"ºC/" +forecast.maxTemp.toString()+"ºC"
-            findViewById<TextView>(R.id.tvPrepRate).text = forecast.precipAccum.toString()+" mm"
+            findViewById<TextView>(R.id.tvMinTemp).text = forecast.minTemp.toString()+"º"
+            findViewById<TextView>(R.id.tvMaxTemp).text = forecast.maxTemp.toString()+"º"
+            findViewById<TextView>(R.id.tvPrecipAccum).text = forecast.precipAccum.toString()+" mm"
             findViewById<TextView>(R.id.tvDayOfWeek).text = forecast.date.formatToPtBrDate()
         }
 
