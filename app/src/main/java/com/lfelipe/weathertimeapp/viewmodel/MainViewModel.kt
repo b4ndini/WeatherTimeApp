@@ -21,7 +21,7 @@ class MainViewModel : ViewModel() {
     private val locationErrorMsgLiveData: MutableLiveData<String> = MutableLiveData()
     private val repository: MainRepository = MainRepository()
 
-    fun getCurrentLocalWeather(location: String) {
+    fun getCurrentLocalWeather(location: String?) {
         viewModelScope.launch {
             when (val response = repository.getCurrentLocalWeather(location)) {
                 is ResponseApi.Success -> {
@@ -50,7 +50,7 @@ class MainViewModel : ViewModel() {
     }
 }
 
-    fun getWeekForecast(location: String) {
+    fun getWeekForecast(location: String?) {
         viewModelScope.launch {
             when (val response = repository.getWeekForecast(location)) {
                 is ResponseApi.Success -> {
@@ -63,7 +63,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun getDailyForecast(location: String) {
+    fun getDailyForecast(location: String?) {
         viewModelScope.launch {
             when (val response = repository.getDailyForecast(location)) {
                 is ResponseApi.Success -> {
@@ -75,9 +75,7 @@ class MainViewModel : ViewModel() {
             }
         }
     }
-
-
-    fun getLocation(lat: String, lon : String) {
+    fun getLocation(lat: String?, lon : String?) {
         viewModelScope.launch {
             when (val response = repository.getLocation(lat, lon)) {
                 is ResponseApi.Success -> {
@@ -89,6 +87,4 @@ class MainViewModel : ViewModel() {
             }
         }
     }
-
-
 }

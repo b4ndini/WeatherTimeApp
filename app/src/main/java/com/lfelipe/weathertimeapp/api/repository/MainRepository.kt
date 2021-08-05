@@ -7,7 +7,7 @@ import java.lang.Exception
 class MainRepository{
 
 
-    suspend fun getCurrentLocalWeather(location: String): ResponseApi {
+    suspend fun getCurrentLocalWeather(location: String?): ResponseApi {
         return try{
             val response = ApiService.weatherApi.currentWeather(location)
 
@@ -42,7 +42,7 @@ class MainRepository{
 
     }
 
-    suspend fun getWeekForecast(location: String) : ResponseApi{
+    suspend fun getWeekForecast(location: String?) : ResponseApi{
 
         return try{
             val response = ApiService.weatherApi.currentForecast(location)
@@ -59,7 +59,7 @@ class MainRepository{
 
     }
 
-    suspend fun getDailyForecast(location: String) : ResponseApi{
+    suspend fun getDailyForecast(location: String?) : ResponseApi{
 
         return try{
             val response = ApiService.weatherApi.dailyForecast(location)
@@ -76,7 +76,7 @@ class MainRepository{
 
     }
 
-    suspend fun getLocation(lat: String, lon: String) : ResponseApi{
+    suspend fun getLocation(lat: String?, lon: String?) : ResponseApi{
 
         return try{
             val response = ApiService.locationApi.getLocation(lat, lon)

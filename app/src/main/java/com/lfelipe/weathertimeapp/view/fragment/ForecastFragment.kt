@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lfelipe.weathertimeapp.databinding.FragmentForecastBinding
+import com.lfelipe.weathertimeapp.util.GpsLocation
 import com.lfelipe.weathertimeapp.view.adapter.DailyAdapter
 import com.lfelipe.weathertimeapp.viewmodel.MainViewModel
 
@@ -30,7 +31,7 @@ class ForecastFragment : Fragment() {
 
         activity?.let {
             viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-            viewModel.getDailyForecast("-51.194895534,-29.97380570")
+            viewModel.getDailyForecast(GpsLocation.location)
         }
 
         setupObserver()
@@ -54,7 +55,7 @@ class ForecastFragment : Fragment() {
         })
 
         viewModel.token.observe(viewLifecycleOwner,{
-            viewModel.getDailyForecast("-51.194895534,-29.97380570")
+            viewModel.getDailyForecast(GpsLocation.location)
         })
 
     }

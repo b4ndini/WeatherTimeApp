@@ -11,8 +11,8 @@ interface LocationApi {
 
     @GET("reverse.php")
     suspend fun getLocation(
-        @Query("lat") lat: String,
-        @Query("lon") lon: String,
+        @Query("lat") lat: String?,
+        @Query("lon") lon: String?,
         @Query("key") key: String = LOCATION_API_KEY,
         @Query("format") format: String = LOCATION_OUTPUT_FORMAT
     ): Response<Location>

@@ -21,20 +21,20 @@ interface WeatherApi {
 
     @GET("api/v1/current/{location}")
     suspend fun currentWeather(
-        @Query("location") location: String,
+        @Query("location") location: String?,
         @Query("lang") lang: String = "pt-br",
         @Query("windunit") wind : String = "KMH"
     ): Response<CurrentWeather>
 
     @GET("api/v1/forecast/daily/{location}")
     suspend fun currentForecast(
-        @Query("location") location: String,
+        @Query("location") location: String?,
         @Query("lang") lang: String = "pt-br"
     ): Response<WeekForecast>
 
     @GET("api/v1/forecast/daily/{location}")
     suspend fun dailyForecast(
-        @Query("location") location: String,
+        @Query("location") location: String?,
         @Query("periods") days: Int = 14,
         @Query("lang") lang: String = "pt-br"
     ): Response<DailyForecast>

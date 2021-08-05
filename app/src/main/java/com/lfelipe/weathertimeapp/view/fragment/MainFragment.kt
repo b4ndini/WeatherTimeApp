@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.lfelipe.weathertimeapp.R
 import com.lfelipe.weathertimeapp.databinding.FragmentMainBinding
 import com.lfelipe.weathertimeapp.util.Constants
+import com.lfelipe.weathertimeapp.util.GpsLocation
 import com.lfelipe.weathertimeapp.view.adapter.MainAdapter
 import com.lfelipe.weathertimeapp.viewmodel.MainViewModel
 
@@ -19,7 +21,6 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var viewModel: MainViewModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +33,15 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getToken()
+
+        activity?.let {
+            viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+            viewModel.getToken()
+        }
         setupObserver()
 
     }
+
 
     private fun setupObserver() {
         viewModel.currentLocalWeatherLiveData.observe(viewLifecycleOwner,{
@@ -73,6 +79,7 @@ class MainFragment : Fragment() {
             binding.errorContainer.visibility = View.VISIBLE
             binding.ivErrorIcon.setOnClickListener {
                 viewModel.getToken()
+                Toast.makeText(context, GpsLocation.longitude, Toast.LENGTH_LONG).show()
             }
 
         })
@@ -80,9 +87,9 @@ class MainFragment : Fragment() {
 
         viewModel.token.observe(viewLifecycleOwner,{
 
-            viewModel.getCurrentLocalWeather("-51.194895534,-29.97380570")
-            viewModel.getWeekForecast("-51.194895534,-29.97380570")
-            viewModel.getLocation("-29.97380570", "-51.194895534")
+            viewModel.getCurrentLocalWeather(GpsLocation.location)
+            viewModel.getWeekForecast(GpsLocation.location)
+            viewModel.getLocation(GpsLocation.latitude, GpsLocation.longitude)
         })
 
         viewModel.locationLiveData.observe(viewLifecycleOwner,{
