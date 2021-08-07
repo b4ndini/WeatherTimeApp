@@ -44,11 +44,11 @@ class MainFragment : Fragment() {
 
 
     private fun setupObserver() {
-        viewModel.currentLocalWeatherLiveData.observe(viewLifecycleOwner,{
+        viewModel.currentLocalWeatherLiveData.observe(viewLifecycleOwner, {
             binding.errorContainer.visibility = View.INVISIBLE
             it.let {
-                binding.tvTemp.text = it.current.temperature.toString() +"ºC"
-                binding.tvRealFeel.text = "Sensação: "+ it.current.feelsLikeTemp.toString() + "ºC"
+                binding.tvTemp.text = it.current.temperature.toString() + "ºC"
+                binding.tvRealFeel.text = "Sensação: " + it.current.feelsLikeTemp.toString() + "ºC"
                 binding.tvPrecipRate.text = it.current.precipProb.toString() + "%"
                 binding.tvWindSpeed.text = it.current.windSpeed.toString() + " km/h"
                 val image = Constants.FORECA_IMAGE_URL + it.current.symbol + ".png"
@@ -66,16 +66,17 @@ class MainFragment : Fragment() {
 
         })
 
-        viewModel.currentWeekForecastLiveData.observe(viewLifecycleOwner,{
-            it.let{
-                binding.rvForecast.apply{
-                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        viewModel.currentWeekForecastLiveData.observe(viewLifecycleOwner, {
+            it.let {
+                binding.rvForecast.apply {
+                    layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter = MainAdapter(it.forecast)
                 }
             }
         })
 
-        viewModel.errorMsgLiveData.observe(viewLifecycleOwner,{
+        viewModel.errorMsgLiveData.observe(viewLifecycleOwner, {
             binding.errorContainer.visibility = View.VISIBLE
             binding.ivErrorIcon.setOnClickListener {
                 viewModel.getToken()
@@ -85,15 +86,15 @@ class MainFragment : Fragment() {
         })
 
 
-        viewModel.token.observe(viewLifecycleOwner,{
+        viewModel.token.observe(viewLifecycleOwner, {
 
             viewModel.getCurrentLocalWeather(GpsLocation.location)
             viewModel.getWeekForecast(GpsLocation.location)
             viewModel.getLocation(GpsLocation.latitude, GpsLocation.longitude)
         })
 
-        viewModel.locationLiveData.observe(viewLifecycleOwner,{
-            it.let{ location ->
+        viewModel.locationLiveData.observe(viewLifecycleOwner, {
+            it.let { location ->
                 binding.tvCity.text = location.address.city
                 binding.tvSuburb.text = location.address.suburb
 

@@ -90,7 +90,22 @@ class MainRepository{
         }catch (exception: Exception){
             ResponseApi.Error("ERRO CARREGAR")
         }
+    }
 
+    suspend fun search(query: String) : ResponseApi{
+
+        return try{
+            val response = ApiService.weatherApi.searchLocations(query)
+
+            if(response.isSuccessful){
+                ResponseApi.Success(response.body())
+            }
+            else{
+                ResponseApi.Error(response.code().toString())
+            }
+        }catch (exception: Exception){
+            ResponseApi.Error("ERRO CARREGAR")
+        }
     }
 
 }

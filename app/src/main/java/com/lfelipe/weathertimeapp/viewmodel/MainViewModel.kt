@@ -16,6 +16,8 @@ class MainViewModel : ViewModel() {
     var locationLiveData: MutableLiveData<Location> = MutableLiveData()
     var currentWeekForecastLiveData: MutableLiveData<WeekForecast> = MutableLiveData()
     var dailyForecastLiveData: MutableLiveData<DailyForecast> = MutableLiveData()
+    var searchLiveData: MutableLiveData<Locations> = MutableLiveData()
+    var searchErrorLiveData: MutableLiveData<String> = MutableLiveData()
     var errorDailyLiveData: MutableLiveData<String> = MutableLiveData()
     val errorMsgLiveData: MutableLiveData<String> = MutableLiveData()
     private val locationErrorMsgLiveData: MutableLiveData<String> = MutableLiveData()
@@ -83,6 +85,19 @@ class MainViewModel : ViewModel() {
                 }
                 is ResponseApi.Error -> {
                     locationErrorMsgLiveData.value = response.msg
+                }
+            }
+        }
+    }
+
+    fun setSearch(query: String) {
+        viewModelScope.launch {
+            when (val response = repository.search(query)) {
+                is ResponseApi.Success -> {
+                    searchLiveData.postValue(response.data as Locations?)
+                }
+                is ResponseApi.Error -> {
+                    searchErrorLiveData.postValue(response.msg)
                 }
             }
         }
