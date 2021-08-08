@@ -108,4 +108,20 @@ class MainRepository{
         }
     }
 
+    suspend fun getHourlyForecast(location: String?) : ResponseApi{
+
+        return try{
+            val response = ApiService.weatherApi.hourlyForecast(location)
+
+            if(response.isSuccessful){
+                ResponseApi.Success(response.body())
+            }
+            else{
+                ResponseApi.Error(response.code().toString())
+            }
+        }catch (exception: Exception){
+            ResponseApi.Error("ERRO CARREGAR")
+        }
+    }
+
 }

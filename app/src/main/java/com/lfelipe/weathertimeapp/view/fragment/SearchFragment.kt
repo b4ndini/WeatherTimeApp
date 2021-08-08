@@ -1,12 +1,15 @@
 package com.lfelipe.weathertimeapp.view.fragment
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lfelipe.weathertimeapp.databinding.FragmentSearchBinding
 import com.lfelipe.weathertimeapp.view.adapter.SearchAdapter
@@ -25,13 +28,33 @@ class SearchFragment : Fragment() {
         binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
+    
+
+    override fun onResume() {
+        super.onResume()
+        binding.svSearch.requestFocus()
+        (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(
+            InputMethodManager.SHOW_FORCED,
+            InputMethodManager.HIDE_IMPLICIT_ONLY
+        )
+    }
+
+    override fun onPause(){
+        super.onPause()
+        (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+            binding.svSearch.windowToken, 0
+        )
+
+    }
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.let {
             viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-          //  viewModel.getToken()
         }
 
         setupSearch(binding.svSearch)
@@ -41,11 +64,17 @@ class SearchFragment : Fragment() {
 
     private fun setupObserver() {
         viewModel.searchLiveData.observe(viewLifecycleOwner, {
-            it?.let {
+            it?.let { location ->
                 binding.rvLocations.apply {
                     layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                        adapter = SearchAdapter(it.locations)
+                        adapter = SearchAdapter(location.locations){ position ->
+                            val local = location.locations[position].id.toString()
+                            val city = location.locations[position].name
+                            val action = SearchFragmentDirections.actionSearchFragmentToWeatherDetailFragment(local, city)
+                            findNavController().navigate(action)
+
+                        }
                 }
             }
         })

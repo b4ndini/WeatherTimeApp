@@ -69,8 +69,7 @@ class MainFragment : Fragment() {
         viewModel.currentWeekForecastLiveData.observe(viewLifecycleOwner, {
             it.let {
                 binding.rvForecast.apply {
-                    layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter = MainAdapter(it.forecast)
                 }
             }

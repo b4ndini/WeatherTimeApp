@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.lfelipe.weathertimeapp.R
 import com.lfelipe.weathertimeapp.model.LocationX
 
 class SearchAdapter(
-    private val list: List<LocationX>
+    private val list: List<LocationX>,
+    private val onClick: (Int) -> Unit
 ) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
 
@@ -20,7 +22,7 @@ class SearchAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[position], onClick)
     }
 
     override fun getItemCount(): Int {
@@ -30,7 +32,7 @@ class SearchAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
-        fun bind(location: LocationX) = with(itemView) {
+        fun bind(location: LocationX, onClick: (Int) -> Unit) = with(itemView) {
 
 
             if(location.country == "Brazil" && location.adminArea != null && location.adminArea.substring(0,6) == "Estado" ){
@@ -40,6 +42,10 @@ class SearchAdapter(
                 findViewById<TextView>(R.id.tvCity).text = location.name + " - " + location.adminArea
             }
             findViewById<TextView>(R.id.tvCountry).text = location.country
+
+            findViewById<ConstraintLayout>(R.id.searchItemContainer).setOnClickListener {
+                onClick(this@ViewHolder.adapterPosition)
+            }
 
         }
 

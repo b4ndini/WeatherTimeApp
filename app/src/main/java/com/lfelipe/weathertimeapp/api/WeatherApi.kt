@@ -43,5 +43,11 @@ interface WeatherApi {
         @Query("lang") lang: String = "pt-br"
     ): Response<Locations>
 
+    @GET("api/v1/forecast/hourly/{location}")
+    suspend fun hourlyForecast(
+        @Query("location") location: String?,
+        @Query("dataset") dataset: String = "full"
+    ): Response<Hourly>
+
 
 }

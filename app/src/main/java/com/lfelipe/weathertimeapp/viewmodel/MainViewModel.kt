@@ -20,6 +20,8 @@ class MainViewModel : ViewModel() {
     var searchErrorLiveData: MutableLiveData<String> = MutableLiveData()
     var errorDailyLiveData: MutableLiveData<String> = MutableLiveData()
     val errorMsgLiveData: MutableLiveData<String> = MutableLiveData()
+    val hourlyLiveData: MutableLiveData<Hourly> = MutableLiveData()
+    val errorHourlyLiveData: MutableLiveData<String> = MutableLiveData()
     private val locationErrorMsgLiveData: MutableLiveData<String> = MutableLiveData()
     private val repository: MainRepository = MainRepository()
 
@@ -98,6 +100,19 @@ class MainViewModel : ViewModel() {
                 }
                 is ResponseApi.Error -> {
                     searchErrorLiveData.postValue(response.msg)
+                }
+            }
+        }
+    }
+
+    fun getHourlyForecast(location: String?) {
+        viewModelScope.launch {
+            when (val response = repository.getHourlyForecast(location)) {
+                is ResponseApi.Success -> {
+                    hourlyLiveData.postValue(response.data as Hourly?)
+                }
+                is ResponseApi.Error -> {
+                    errorHourlyLiveData.postValue(response.msg)
                 }
             }
         }
