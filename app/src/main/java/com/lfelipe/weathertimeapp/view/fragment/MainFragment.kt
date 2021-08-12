@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.lfelipe.weathertimeapp.R
@@ -38,8 +39,25 @@ class MainFragment : Fragment() {
             viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
             viewModel.getToken()
         }
+
+        binding.apply {
+            ivTempIcon.setOnClickListener { navToDetail() }
+            tvCity.setOnClickListener { navToDetail() }
+            tvTemp.setOnClickListener { navToDetail() }
+            tvSuburb.setOnClickListener { navToDetail() }
+        }
+
         setupObserver()
 
+
+    }
+
+    private fun navToDetail() {
+        val city = viewModel.locationLiveData.value?.address?.city ?: ""
+        val action =
+            MainFragmentDirections.actionMainFragmentToWeatherDetailFragment(GpsLocation.location,
+                city)
+        findNavController().navigate(action)
     }
 
 
@@ -69,7 +87,8 @@ class MainFragment : Fragment() {
         viewModel.currentWeekForecastLiveData.observe(viewLifecycleOwner, {
             it.let {
                 binding.rvForecast.apply {
-                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter = MainAdapter(it.forecast)
                 }
             }

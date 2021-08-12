@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.lfelipe.weathertimeapp.databinding.FragmentWeatherDetailBinding
@@ -36,25 +37,24 @@ class WeatherDetailFragment : Fragment() {
         activity?.let {
             viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
             val loc = args.location
-            viewModel.getWeekForecast(loc)
             viewModel.getHourlyForecast(loc)
             viewModel.getCurrentLocalWeather(loc)
         }
 
         setupObserve()
 
+        binding.tvWeekForecast.setOnClickListener{
+            goToForecastFragment()
+        }
+
+        binding.ivArrow.setOnClickListener{
+            goToForecastFragment()
+        }
+
     }
 
     private fun setupObserve() {
         //TODO viewModel errors livedata
-        viewModel.currentWeekForecastLiveData.observe(viewLifecycleOwner, {
-            it?.let{ week ->
-                binding.rvWeekForecast.apply {
-                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    adapter = MainAdapter(week.forecast)
-                }
-            }
-        })
 
         viewModel.hourlyLiveData.observe(viewLifecycleOwner, {
             it?.let{ hourly ->
@@ -89,6 +89,11 @@ class WeatherDetailFragment : Fragment() {
 
             }
         })
+    }
+    private fun goToForecastFragment(){
+        val local = args.location
+        val action = WeatherDetailFragmentDirections.actionWeatherDetailFragmentToWeekForecastFragment(local)
+        findNavController().navigate(action)
     }
 
 }

@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containerWeatherItem"
     tools:background="@drawable/rounded_shape"
-    android:backgroundTint="#242634"
+    android:padding="5dp"
     android:layout_marginStart="20dp"
     android:layout_marginEnd="20dp"
+    android:layout_marginTop="2dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 

@@ -9,7 +9,7 @@
         android:id="@+id/mainFragment"
         android:name="com.lfelipe.weathertimeapp.view.fragment.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_weatherDetailFragment"
             app:destination="@id/weatherDetailFragment" />
@@ -40,9 +40,23 @@
         tools:layout="@layout/fragment_weather_detail">
         <argument
             android:name="location"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
         <argument
             android:name="city"
             app:argType="string" />
+        <action
+            android:id="@+id/action_weatherDetailFragment_to_weekForecastFragment"
+            app:destination="@id/weekForecastFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/weekForecastFragment"
+        android:name="com.lfelipe.weathertimeapp.view.fragment.WeekForecastFragment"
+        android:label="fragment_week_forecast"
+        tools:layout="@layout/fragment_week_forecast" >
+        <argument
+            android:name="location"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>
