@@ -1,6 +1,5 @@
 package com.lfelipe.weathertimeapp.util
 
-//constants and VAR!
 object Constants {
 
     const val WEATHER_BASE_URL = "https://fnw-us.foreca.com/"
@@ -12,6 +11,5 @@ object Constants {
     const val FORECA_USER = "luisfelipe_pmm"
     const val FORECA_PASSWORD = "yKfYTuuDkR60"
     const val FORECA_IMAGE_URL = "https://developer.foreca.com/static/images/symbols/"
-
 
 }

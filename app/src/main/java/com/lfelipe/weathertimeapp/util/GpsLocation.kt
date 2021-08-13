@@ -2,8 +2,9 @@ package com.lfelipe.weathertimeapp.util
 
 object GpsLocation {
 
-    var location: String? = "-51.194895534, -29.97380570"
-    var latitude: String? = "-29.97380570"
-    var longitude: String? = "-51.194895534"
+    var location: String? = null
+    var latitude: String? = null
+    var longitude: String? = null
+
 
 }

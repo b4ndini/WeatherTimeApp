@@ -25,4 +25,12 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textStyle">italic</item>
     </style>
+
+    <style name="SearchViewStyle">
+    <!--<item name="android:textColorHint">#787878</item> -->
+        <!-- também dá para mudar o ícone como atributo searchIcon-->
+        <item name="android:editTextColor">@color/black</item>
+        <item name="android:textColorHint">#787878</item>
+        <item name="tint">#787878</item>
+    </style>
 </resources>

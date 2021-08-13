@@ -26,6 +26,8 @@
         tools:listitem="@layout/search_item_list" />
 
     <androidx.appcompat.widget.SearchView
+        style="@style/SearchViewStyle"
+        android:theme="@style/SearchViewStyle"
         android:id="@+id/svSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

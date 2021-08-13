@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Weather Time App</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="daily_forecast">Previsão para os próximos dias</string>
+    <string name="enable_gps">É necessário ativar o Localização para o aplicativo funcionar corretamente. Toque para recarregar.</string>
+    <string name="grant_permissions">É necessário aceitar as permissões do serviço de Localização para o adequado funcionamento do aplicativo. Toque para recarregar.</string>
+    <string name="api_connection_fail">Falha na conexão. Toque para recarregar.</string>
 </resources>

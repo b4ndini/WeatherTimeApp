@@ -124,14 +124,25 @@
         android:id="@+id/errorContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:constraint_referenced_ids="tvErrorMsg, ivErrorIcon" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/clickableContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="tvTemp, tvCity, tvSuburb, ivTempIcon" />
 
     <TextView
         android:id="@+id/tvErrorMsg"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Falha na conexão. \nClique para recarregar."
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:padding="5dp"
+        android:text="@string/api_connection_fail"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -144,9 +155,27 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:src="@drawable/ic_reload"
-        app:layout_constraintBottom_toBottomOf="@id/ivTempIcon"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ivTempIcon" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        app:trackColor="#B3FFFFFF"
+        app:trackThickness="5dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
