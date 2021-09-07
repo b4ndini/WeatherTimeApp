@@ -5,15 +5,20 @@
     android:id="@+id/activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="#242634"
     tools:context=".view.fragment.MainFragment">
 
 
     <TextView
         android:id="@+id/tvSuburb"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
+        android:textAlignment="center"
+        android:maxLength="36"
+        android:maxLines="3"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,13 +130,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        tools:visibility="visible"
         app:constraint_referenced_ids="tvErrorMsg, ivErrorIcon" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/clickableContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:constraint_referenced_ids="tvTemp, tvCity, tvSuburb, ivTempIcon" />
 
     <TextView
@@ -167,7 +174,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:visibility="invisible"
         app:indicatorColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -176,6 +182,29 @@
         app:layout_constraintVertical_bias="0.4"
         app:trackColor="#B3FFFFFF"
         app:trackThickness="5dp" />
+
+    <TextView
+        android:id="@+id/tvLoadingMsg"
+        android:textSize="16sp"
+        android:layout_margin="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        tools:text="Carregando informações da Localização"
+        app:layout_constraintTop_toBottomOf="@id/pbLoading"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/white"
+        />
+
+    <androidx.constraintlayout.widget.Group
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:id="@+id/containerLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="pbLoading,tvLoadingMsg"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

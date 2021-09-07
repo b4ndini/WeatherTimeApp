@@ -11,7 +11,7 @@ data class Current(
     val symbol: String,
     val symbolPhrase: String,
     val temperature: Int,
-    val thunderProb: Int,
+    val thunderProb: Double,
     val time: String,
     val uvIndex: Int,
     val visibility: Int,

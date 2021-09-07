@@ -79,11 +79,18 @@ class WeatherDetailFragment : Fragment() {
                     tvWindSpeed.text = "Vento:\n ${cw.windSpeed} km/h"
                     tvPrecipProb.text = "Prob. Chuva:\n ${cw.precipProb}%"
                     tvPrecipRate.text = "Volume:\n ${cw.precipRate} mm"
-                    tvThunderProb.text = "Prob. Raio:\n ${cw.thunderProb}%"
+                    tvThunderProb.text = "Prob. Raio:\n ${cw.thunderProb.toInt()}%"
                     tvHumidity.text = "Umidade:\n ${cw.relHumidity}%"
                     tvVisibility.text = "Visib:\n ${cw.visibility/1000} km"
                     tvIndexUV.text = "Índice UV:\n ${cw.uvIndex}"
-                    tvCity.text = args.city
+
+                    if(args.city.isNullOrBlank()){
+                        val locationList = args.locationName?.split(",") ?: mutableListOf("")
+                        tvCity.text = locationList[0]
+                    }else{
+                        tvCity.text = args.city
+                    }
+
 
                 }
 

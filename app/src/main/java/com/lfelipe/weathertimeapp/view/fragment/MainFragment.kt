@@ -10,7 +10,6 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
-import android.telephony.CarrierConfigManager
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,7 +17,6 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -34,7 +32,6 @@ import com.lfelipe.weathertimeapp.R
 import com.lfelipe.weathertimeapp.databinding.FragmentMainBinding
 import com.lfelipe.weathertimeapp.util.Constants
 import com.lfelipe.weathertimeapp.util.GpsLocation
-import com.lfelipe.weathertimeapp.util.TokenAuth
 import com.lfelipe.weathertimeapp.view.adapter.MainAdapter
 import com.lfelipe.weathertimeapp.viewmodel.MainViewModel
 import java.util.concurrent.TimeUnit
@@ -46,7 +43,12 @@ class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
-    private val PERMISSION_ID = 42
+
+
+    companion object {
+
+        private const val PERMISSION_ID = 42
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +67,7 @@ class MainFragment : Fragment() {
 
         activity?.let {
             viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-            setLocationRequest()
+           // setLocationRequest()
             setupGpsService()
         }
 
@@ -77,7 +79,7 @@ class MainFragment : Fragment() {
             tvTemp.setOnClickListener { navToDetail() }
             tvSuburb.setOnClickListener { navToDetail() }
             ivErrorIcon.setOnClickListener {
-                setLocationRequest()
+               // setLocationRequest()
                 setupGpsService()
             }
         }
@@ -88,9 +90,10 @@ class MainFragment : Fragment() {
 
     private fun navToDetail() {
         val city = viewModel.locationLiveData.value?.address?.city ?: ""
+        val locationName = viewModel.locationLiveData.value?.displayName ?: ""
         val action =
             MainFragmentDirections.actionMainFragmentToWeatherDetailFragment(GpsLocation.location,
-                city)
+                city, locationName)
         findNavController().navigate(action)
     }
 
@@ -98,6 +101,7 @@ class MainFragment : Fragment() {
     private fun setupObserver() {
         viewModel.currentLocalWeatherLiveData.observe(viewLifecycleOwner, {
             viewModel.getLocation(GpsLocation.latitude, GpsLocation.longitude)
+            viewModel.getWeekForecast(GpsLocation.location)
             setErrorUI(false)
             settingProgressBar(false)
             it.let {
@@ -132,8 +136,11 @@ class MainFragment : Fragment() {
 
         viewModel.errorMsgLiveData.observe(viewLifecycleOwner, {
             setErrorUI(true, getString(R.string.api_connection_fail))
+            settingProgressBar(false)
             binding.ivErrorIcon.setOnClickListener {
                 viewModel.getToken()
+                setErrorUI(false)
+                settingProgressBar(true, getString(R.string.loading_data_msg))
             }
 
         })
@@ -142,18 +149,26 @@ class MainFragment : Fragment() {
         viewModel.token.observe(viewLifecycleOwner, {
 
             viewModel.getCurrentLocalWeather(GpsLocation.location)
-            viewModel.getWeekForecast(GpsLocation.location)
+
 
         })
 
         viewModel.locationLiveData.observe(viewLifecycleOwner, {
             it.let { location ->
-                binding.tvCity.text = location.address.city
-                binding.tvSuburb.text = location.address.suburb
 
+                if(!location.address.city.isNullOrBlank() && !location.address.suburb.isNullOrBlank()){
+                    binding.tvCity.text = location.address.city
+                    binding.tvSuburb.text = location.address.suburb
+                }else{
+                    val locationDataList = location.displayName.split(",")
+                    binding.tvSuburb.text = locationDataList[0]
+                    binding.tvCity.text = locationDataList[1]
+                }
             }
         })
     }
+
+
 
     private fun setWeatherBackground(condition: String) {
         when {
@@ -221,15 +236,16 @@ class MainFragment : Fragment() {
             if (ContextCompat.checkSelfPermission(requireContext(),
                     Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
             ) {
-                fusedLocationProviderClient.lastLocation.addOnCompleteListener(requireActivity()) { tk ->
-                    val location: Location? = tk.result
-                    if (location == null) {
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener(requireActivity()) { location ->
+                    val myLocation: Location? = location.result
+                    if (myLocation == null) {
                         requestNewLocation()
                     } else {
-                        GpsLocation.location = "${location.longitude},${location.latitude}"
-                        GpsLocation.latitude = location.latitude.toString()
-                        GpsLocation.longitude = location.longitude.toString()
+                        GpsLocation.location = "${myLocation.longitude},${myLocation.latitude}"
+                        GpsLocation.latitude = myLocation.latitude.toString()
+                        GpsLocation.longitude = myLocation.longitude.toString()
                         setErrorUI(false)
+                        settingProgressBar(true, getString(R.string.loading_data_msg))
                         viewModel.getToken()
                     }
                 }
@@ -252,6 +268,7 @@ class MainFragment : Fragment() {
             fastestInterval = 1000
             maxWaitTime = TimeUnit.MINUTES.toMillis(1)
             numUpdates = 1
+            expirationTime = 6000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
     }
@@ -259,6 +276,9 @@ class MainFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun requestNewLocation() {
+
+        setLocationRequest()
+
         fusedLocationProviderClient.requestLocationUpdates(locationRequest,
             locationCallBack,
             Looper.getMainLooper())
@@ -267,18 +287,20 @@ class MainFragment : Fragment() {
     private val locationCallBack = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
-            val lastLocation = locationResult.lastLocation
+            getCurrentLocationGPS()
+           /* val lastLocation = locationResult.lastLocation
             GpsLocation.location = "${lastLocation.longitude},${lastLocation.latitude}"
             GpsLocation.latitude = lastLocation.latitude.toString()
             GpsLocation.longitude = lastLocation.longitude.toString()
             setErrorUI(false)
-            settingProgressBar(true)
-            viewModel.getToken()
+            settingProgressBar(true, getString(R.string.loading_data_msg))
+            viewModel.getToken()*/
         }
     }
 
     private fun enableGps() {
 
+        setLocationRequest()
         val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
             .setAlwaysShow(true)
         val result: Task<LocationSettingsResponse> =
@@ -359,16 +381,14 @@ class MainFragment : Fragment() {
     }
 
 
-    private fun settingProgressBar(state: Boolean) {
+    private fun settingProgressBar(state: Boolean, msg: String? = null) {
         if (state) {
-            binding.pbLoading.apply {
-                visibility = VISIBLE
+            binding.containerLoading.visibility = VISIBLE
+            binding.tvLoadingMsg.text = msg ?: getString(R.string.loading_location_msg)
 
-            }
         } else {
-            binding.pbLoading.apply {
-                visibility = GONE
-            }
+            binding.containerLoading.visibility = GONE
+
         }
     }
 

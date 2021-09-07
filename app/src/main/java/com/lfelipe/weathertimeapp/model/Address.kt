@@ -1,7 +1,7 @@
 package com.lfelipe.weathertimeapp.model
 
 data class Address(
-    val city: String,
+    val city: String?,
     val city_district: String,
     val country: String,
     val country_code: String,
@@ -13,5 +13,5 @@ data class Address(
     val road: String,
     val state: String,
     val state_district: String,
-    val suburb: String
+    val suburb: String?
 )

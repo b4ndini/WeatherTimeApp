@@ -5,4 +5,6 @@
     <string name="enable_gps">É necessário ativar o Localização para o aplicativo funcionar corretamente. Toque para recarregar.</string>
     <string name="grant_permissions">É necessário aceitar as permissões do serviço de Localização para o adequado funcionamento do aplicativo. Toque para recarregar.</string>
     <string name="api_connection_fail">Falha na conexão. Toque para recarregar.</string>
+    <string name="loading_location_msg">Carregando informações da Localização</string>
+    <string name="loading_data_msg">Carregando informações do clima</string>
 </resources>

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lfelipe.weathertimeapp.util.TokenAuth.TOKEN
 import com.lfelipe.weathertimeapp.api.ResponseApi
-import com.lfelipe.weathertimeapp.api.repository.MainRepository
+import com.lfelipe.weathertimeapp.repository.MainRepository
 import com.lfelipe.weathertimeapp.model.*
 import kotlinx.coroutines.launch
 

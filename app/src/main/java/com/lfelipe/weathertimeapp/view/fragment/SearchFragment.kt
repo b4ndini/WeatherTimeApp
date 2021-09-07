@@ -71,7 +71,7 @@ class SearchFragment : Fragment() {
                         adapter = SearchAdapter(location.locations){ position ->
                             val local = location.locations[position].id.toString()
                             val city = location.locations[position].name
-                            val action = SearchFragmentDirections.actionSearchFragmentToWeatherDetailFragment(local, city)
+                            val action = SearchFragmentDirections.actionSearchFragmentToWeatherDetailFragment(local, city, null)
                             findNavController().navigate(action)
 
                         }

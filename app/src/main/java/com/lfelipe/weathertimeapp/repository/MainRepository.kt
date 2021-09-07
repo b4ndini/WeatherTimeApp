@@ -1,4 +1,4 @@
-package com.lfelipe.weathertimeapp.api.repository
+package com.lfelipe.weathertimeapp.repository
 
 import com.lfelipe.weathertimeapp.api.ApiService
 import com.lfelipe.weathertimeapp.api.ResponseApi
