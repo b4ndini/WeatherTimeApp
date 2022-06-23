@@ -6,7 +6,6 @@ import java.lang.Exception
 
 class MainRepository{
 
-
     suspend fun getCurrentLocalWeather(location: String?): ResponseApi {
         return try{
             val response = ApiService.weatherApi.currentWeather(location)

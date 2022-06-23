@@ -15,11 +15,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        app:layout_constraintBottom_toBottomOf="@id/tvPrecipAccum"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvMaxTemp"
         tools:text="Hoje" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/tvDayOfWeek"
+        tools:text="SEG"
+        android:id="@+id/tvDayOfWeekText"
+        app:layout_constraintStart_toStartOf="@+id/tvDayOfWeek"
+        app:layout_constraintEnd_toEndOf="@id/tvDayOfWeek"
+/>
     <TextView
         style="@style/DailyText"
         android:textColor="#80FFFFFF"
@@ -66,5 +77,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvMaxTemp"
         tools:srcCompat="@tools:sample/avatars" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

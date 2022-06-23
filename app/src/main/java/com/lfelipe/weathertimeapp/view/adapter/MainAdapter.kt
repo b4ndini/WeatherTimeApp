@@ -10,6 +10,9 @@ import com.lfelipe.weathertimeapp.util.Constants
 import com.lfelipe.weathertimeapp.R
 import com.lfelipe.weathertimeapp.model.Forecast
 import com.lfelipe.weathertimeapp.util.formatToPtBrDate
+import com.lfelipe.weathertimeapp.util.getDayOfWeekInText
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class MainAdapter (
@@ -24,7 +27,7 @@ class MainAdapter (
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[position], position)
     }
 
     override fun getItemCount(): Int {
@@ -34,16 +37,28 @@ class MainAdapter (
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
-        fun bind(forecast: Forecast) = with(itemView) {
+        fun bind(forecast: Forecast, pos: Int) = with(itemView) {
 
-
+            when (pos) {
+                0 -> {
+                    findViewById<TextView>(R.id.tvDayOfWeek).text = "Hoje"
+                }
+                1 -> {
+                    findViewById<TextView>(R.id.tvDayOfWeek).text = "Amanhã"
+                }
+                else -> {
+                    findViewById<TextView>(R.id.tvDayOfWeek).text = forecast.date.formatToPtBrDate()
+                }
+            }
+            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val locale = Locale("pt", "BR")
+            findViewById<TextView>(R.id.tvDayOfWeekText).text = forecast.date.getDayOfWeekInText(locale, DateTimeFormatter.ISO_LOCAL_DATE)
+          //  }
             val image = Constants.FORECA_IMAGE_URL + forecast.symbol + ".png"
             Glide.with(this).load(image).into(findViewById(R.id.ivWeatherIcon))
             findViewById<TextView>(R.id.tvMinMaxTemp).text = forecast.minTemp.toString()+"ºC/" +forecast.maxTemp.toString()+"ºC"
             findViewById<TextView>(R.id.tvPrepRate).text = forecast.precipAccum.toString()+" mm"
-            findViewById<TextView>(R.id.tvDayOfWeek).text = forecast.date.formatToPtBrDate()
         }
 
     }
-
 }

@@ -30,6 +30,8 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -52,7 +54,7 @@ dependencies {
     //Retrofit, Interceptor e Gson
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.3'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
     //ViewModel and Live Data
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
@@ -65,6 +67,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     //Google location
     implementation 'com.google.android.gms:play-services-location:18.0.0'
-
-
+    //Lib to allow Android SDK's above API 26(Android 8) to use LocalDate and other java 8 libs
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 }

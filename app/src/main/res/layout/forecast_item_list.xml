@@ -24,12 +24,25 @@
         android:layout_marginTop="5dp"
         tools:text="22/09" />
 
+    <TextView
+        android:id="@+id/tvDayOfWeekText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toTopOf="@+id/ivWeatherIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDayOfWeek"
+        tools:text="Qua" />
+
     <ImageView
         android:id="@+id/ivWeatherIcon"
         android:layout_width="60dp"
         android:layout_height="60dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDayOfWeek"
+        app:layout_constraintTop_toBottomOf="@id/tvDayOfWeekText"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="2dp"
         android:layout_marginStart="10dp"
@@ -46,15 +59,6 @@
         app:layout_constraintStart_toStartOf="@+id/ivWeatherIcon"
         app:layout_constraintTop_toBottomOf="@id/ivWeatherIcon"
         tools:text="22º/24º" />
-
-    <ImageView
-        android:id="@+id/ivPrepRate"
-        android:layout_width="13dp"
-        android:layout_height="13dp"
-        android:src="@drawable/water"
-        app:layout_constraintTop_toTopOf="@id/tvPrepRate"
-        app:layout_constraintBottom_toBottomOf="@id/tvPrepRate"
-        app:layout_constraintStart_toStartOf="@id/ivWeatherIcon"/>
 
     <TextView
         android:id="@+id/tvPrepRate"

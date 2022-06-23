@@ -8,7 +8,6 @@
     android:background="#242634"
     tools:context=".view.fragment.MainFragment">
 
-
     <TextView
         android:id="@+id/tvSuburb"
         android:layout_width="0dp"
@@ -111,9 +110,7 @@
         android:id="@+id/rvForecast"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

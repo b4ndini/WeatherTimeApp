@@ -61,10 +61,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
-
         activity?.let {
             viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
            // setLocationRequest()
@@ -167,8 +163,6 @@ class MainFragment : Fragment() {
             }
         })
     }
-
-
 
     private fun setWeatherBackground(condition: String) {
         when {
